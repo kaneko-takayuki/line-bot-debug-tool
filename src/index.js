@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 // import { createStore } from 'redux';
 // import { Provider } from 'react-redux';
-import App from './js/App';
+import app from './js/app';
 // import lineBotDebugApp from './reducers'
 
 /* 状態遷移(reducers)をstoreとして取得 */
@@ -10,6 +10,6 @@ import App from './js/App';
 
 /* アプリケーションをstoreを指定して描画 */
 render(
-  <App />,
+  <app />,
   document.getElementById('root')
 );

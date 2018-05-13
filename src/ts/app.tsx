@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-const App = () => {
+const app = () => {
   return (
     <div>
       Hello World-3!
-        <hr/>
+      <hr/>
     </div>
   );
 };
 
-export default App;
+export default app;
