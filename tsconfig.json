@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "jsx": "react-native",
+    "lib": ["DOM", "ES2017"],
+    "rootDir": "src/ts",
+    "outDir": "src/js",
+    "types": ["node"]
+  }
+}
