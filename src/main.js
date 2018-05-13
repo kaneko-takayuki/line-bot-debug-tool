@@ -6,7 +6,7 @@ let window = null;
 // 起動時の処理
 app.on('ready', () => {
   // ウィンドウの生成
-  window = new BrowserWindow({width: 800, height: 600});
+  window = new BrowserWindow({width: 800, height: 600, minWidth: 800, minHeight: 600});
   window.loadURL(`file://${__dirname}/../build/index.html`);
 
   // デバッグツールはデフォルトOFF.

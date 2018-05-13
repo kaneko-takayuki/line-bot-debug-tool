@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import Grid from 'material-ui/Grid';
 
 import { changeMessage, TalkAction } from '../actions/talk';
 import InputTextPanel from '../components/InputTextPanel';
@@ -11,9 +12,13 @@ interface Props {
 }
 
 class TalkContainer extends React.Component<Props> {
-  render() {
+  render(): JSX.Element {
     return (
-      <InputTextPanel message={this.props.message} onChangeMessage={this.props.onChangeMessage} />
+      <Grid container={true} direction="column">
+        <Grid item={true} xs={12}>
+          <InputTextPanel message={this.props.message} onChangeMessage={this.props.onChangeMessage} />
+        </Grid>
+      </Grid>
     );
   }
 }
