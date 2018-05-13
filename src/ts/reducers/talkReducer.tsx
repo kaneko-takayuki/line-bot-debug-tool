@@ -5,13 +5,19 @@ export interface talkProps {
 }
 
 export const initTalkProps = {
-  message: 'default',
+  message: '',
 };
 
 export function talkReducer(state: talkProps = initTalkProps, action: TalkAction) {
   switch (action.type) {
     // メッセージを変更
     case TalkActionTypes.CHANGE_MESSAGE:
+      return {
+        ...state,
+        message: action.payload.message,
+      };
+    // メッセージが送信された
+    case TalkActionTypes.SEND_MESSAGE:
       return {
         ...state,
         message: action.payload.message,
