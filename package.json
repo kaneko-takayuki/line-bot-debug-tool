@@ -19,12 +19,13 @@
     "redux": "^4.0.0",
     "tslint": "^5.10.0",
     "tslint-config-airbnb": "^5.8.0",
+    "tslint-react": "^3.6.0",
     "tsutils": "^2.27.0",
     "typescript": "^2.8.3"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "tsc && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "tslint 'src/ts/**/*.ts{,x}'"
