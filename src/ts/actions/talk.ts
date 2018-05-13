@@ -45,8 +45,15 @@ export function changeMessage(message: string): ChangeMessageAction {
  * @returns {any}
  */
 export function sendMessage(message: string): any {
+  const method = 'POST';
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  };
+  const body = JSON.stringify({ message });
+
   return (dispatch) => {
-    fetch(`http://localhost:5000/send-message?message=${message}`)
+    fetch('http://localhost:5000/send-message', { method, headers, body })
       .then(response => response.json())
       .then(result => dispatch(successSendMessage(result.message)))
       .catch(error => console.log(error));
