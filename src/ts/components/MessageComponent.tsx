@@ -27,13 +27,18 @@ const styles = {
   },
 };
 
+/**
+ * Date型を文字列に変換する
+ * @param {Date} date
+ * @returns {string}
+ */
 const dateToString = (date: Date) => {
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
+  const year = ('0000' + date.getFullYear()).slice(-4);
+  const month = ('00' + (date.getMonth() + 1)).slice(-2);
+  const day = ('00' + date.getDate()).slice(-2);
+  const hours = ('00' + date.getHours()).slice(-2);
+  const minutes = ('00' + date.getMinutes()).slice(-2);
+  const seconds = ('00' + date.getSeconds()).slice(-2);
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
