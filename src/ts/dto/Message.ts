@@ -1,9 +1,9 @@
 export default class Message {
   user: string;
-  message: string;
+  text: string;
 
-  constructor(user: string = '', message: string = '') {
+  constructor(user: string = '', text: string = '') {
     this.user = user;
-    this.message = message;
+    this.text = text;
   }
 }

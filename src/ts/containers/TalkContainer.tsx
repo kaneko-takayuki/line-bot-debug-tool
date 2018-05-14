@@ -4,10 +4,13 @@ import { Dispatch } from 'redux';
 import Grid from 'material-ui/Grid';
 
 import { TalkAction, changeMessage, sendMessage, postMessage } from '../actions/talk';
+import Message from '../dto/Message';
 import InputTextPanel from '../components/InputTextPanel';
+import MessageComponentList from '../components/MessageComponentList';
 
 interface Props {
   messageText?: string;
+  messageLog?: Message[];
   onChangeMessage?: (message: string) => void;
   sendMessage?: (message: string) => void;
 }
@@ -22,6 +25,10 @@ class TalkContainer extends React.Component<Props> {
             onChangeMessage={this.props.onChangeMessage}
             sendMessage={this.props.sendMessage}
           />
+        </Grid>
+
+        <Grid item={true} xs={12}>
+          <MessageComponentList messageLog={this.props.messageLog} />
         </Grid>
       </Grid>
     );
