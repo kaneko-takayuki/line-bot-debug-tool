@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import {compose, Dispatch} from 'redux';
+import { compose, Dispatch } from 'redux';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 
@@ -53,6 +53,10 @@ function mapDispatchToProps(dispatch: Dispatch<TalkAction>) {
   return {
     onChangeMessage: (message: string) => {dispatch(changeMessage(message));},
     sendMessage: (messageText: string) => {
+      // テキストが何も入力されていない場合、何も行わない
+      if (messageText.length <= 0) {
+        return;
+      }
       dispatch(sendMessage(messageText));
       dispatch(postMessage(messageText));
       dispatch(changeMessage(''));
