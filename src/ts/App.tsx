@@ -1,23 +1,31 @@
 import * as React from 'react';
 import Grid from 'material-ui/Grid/Grid';
+import { withStyles } from 'material-ui/styles';
 
 import TalkContainer from './containers/TalkContainer';
 
 const styles = {
   root: {
-    width: '80%',
-    margin: 'auto',
+    flexGrow: 1,
   },
 };
 
-const App = (): JSX.Element => {
-  return (
-    <Grid container={true} style={styles.root} direction="row" justify="center">
-      <Grid item={true} xs={12}>
-        <TalkContainer />
-      </Grid>
-    </Grid>
-  );
-};
+interface Props {
+  classes: any;
+}
 
-export default App;
+class App extends React.Component<Props> {
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <Grid container={true} className={classes.root}>
+        <Grid item={true} xs={12}>
+          <TalkContainer />
+        </Grid>
+      </Grid>
+    );
+  }
+}
+
+export default withStyles(styles)(App);

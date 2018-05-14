@@ -1,33 +1,51 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 import Grid from 'material-ui/Grid';
+import List from 'material-ui/List';
+import { withStyles } from 'material-ui/styles';
 
 import Message from '../dto/Message';
 import MessageComponent from './MessageComponent';
 
 interface Props {
+  classes: any;
   messageLog: Message[];
 }
 
 const styles = {
   root: {
-    width: '80%',
-    margin: 'auto',
+    flexGrow: 1,
   },
-  child: {
-    width: '100%',
-    margin: 'auto',
+  list: {
+    maxHeight: 400,
+    overflow: 'auto',
   },
 };
 
-export default class MessageComponentList extends React.Component<Props, null> {
-  render(): JSX.Element {
+class MessageComponentList extends React.Component<Props, null> {
+  renderMessageComponent = (message: Message, i: number): JSX.Element => {
     return (
-      <Grid container={true} style={styles.root}>
-        <Grid item={true} style={styles.child}>
-          {_.map(this.props.messageLog, (message: Message, i: number) => <MessageComponent key={i} message={message} />).reverse()}
+      <li key={i}>
+        <MessageComponent message={message} />
+      </li>
+    );
+  }
+
+  render(): JSX.Element {
+    const { classes } = this.props;
+
+    return (
+      <Grid container={true} direction="row" justify="center">
+        <Grid item={true} xs={2} />
+        <Grid item={true} xs={8}>
+          <List className={classes.list} subheader={<li />}>
+            {_.map(this.props.messageLog, this.renderMessageComponent).reverse()}
+          </List>
         </Grid>
+        <Grid item={true} xs={2} />
       </Grid>
     );
   }
 }
+
+export default withStyles(styles)(MessageComponentList);

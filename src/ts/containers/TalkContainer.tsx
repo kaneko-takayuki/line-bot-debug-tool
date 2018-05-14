@@ -1,14 +1,22 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import {compose, Dispatch} from 'redux';
 import Grid from 'material-ui/Grid';
+import { withStyles } from 'material-ui/styles';
 
 import { TalkAction, changeMessage, sendMessage, postMessage } from '../actions/talk';
 import Message from '../dto/Message';
 import InputTextPanel from '../components/InputTextPanel';
 import MessageComponentList from '../components/MessageComponentList';
 
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+};
+
 interface Props {
+  classes: any;
   messageText?: string;
   messageLog?: Message[];
   onChangeMessage?: (message: string) => void;
@@ -17,8 +25,10 @@ interface Props {
 
 class TalkContainer extends React.Component<Props> {
   render(): JSX.Element {
+    const { classes } = this.props;
+
     return (
-      <Grid container={true} direction="column">
+      <Grid container={true} className={classes.root}>
         <Grid item={true} xs={12}>
           <InputTextPanel
             messageText={this.props.messageText}
@@ -50,4 +60,12 @@ function mapDispatchToProps(dispatch: Dispatch<TalkAction>) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TalkContainer);
+// connect(mapStateToProps, mapDispatchToProps)(TalkContainer);
+// export default withStyles(styles)(TalkContainer);
+
+
+// export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(TalkContainer);
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps, mapDispatchToProps),
+)(TalkContainer);
