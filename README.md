@@ -13,6 +13,7 @@ LineBotは、ユーザがメッセージ送信を送ることをきっかけに�
 
 ## Demo
 ※5/15(火)時点での挙動です。
+![result](https://github.com/kaneko-takayuki/line-bot-development-tool/blob/media/gif/5-15_LineBotDemo.gif)
 
 ## Install
 ※あらかじめ、Nodeの環境構築を行い、`yarn`コマンドを使えるようにしてください。
