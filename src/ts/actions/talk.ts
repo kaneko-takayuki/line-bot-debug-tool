@@ -1,6 +1,8 @@
 import { Action } from 'redux';
 
 import Message from '../dto/Message';
+import { DOMAIN_NAME, E_SEND_MESSAGE } from '../conf/endpoint';
+import { ME, BOT } from '../conf/userName';
 
 // アクション
 export const TalkActionTypes = {
@@ -55,9 +57,9 @@ export function postMessage(messageText: string): any {
   const body = JSON.stringify({ messageText });
 
   return (dispatch) => {
-    fetch('http://localhost:5000/send-message', { method, headers, body })
+    fetch(`${DOMAIN_NAME}/${E_SEND_MESSAGE}`, { method, headers, body })
       .then(response => response.json())
-      .then(result => new Message('bot', result.messageText))
+      .then(result => new Message(BOT, result.messageText))
       .then(message => dispatch(addMessageLog(message)))
       .catch(error => console.log(error));
   };
@@ -84,7 +86,7 @@ export function addMessageLog(message: Message): AddMessageLogAction {
  */
 export function sendMessage(messageText: string): any {
   return (dispatch) => {
-    const message = new Message('me', messageText);
+    const message = new Message(ME, messageText);
     dispatch(addMessageLog(message));
   };
 }
