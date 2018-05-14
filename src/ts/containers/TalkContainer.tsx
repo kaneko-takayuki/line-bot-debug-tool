@@ -64,10 +64,6 @@ function mapDispatchToProps(dispatch: Dispatch<TalkAction>) {
   };
 }
 
-// connect(mapStateToProps, mapDispatchToProps)(TalkContainer);
-// export default withStyles(styles)(TalkContainer);
-
-
 // export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(TalkContainer);
 export default compose(
   withStyles(styles),

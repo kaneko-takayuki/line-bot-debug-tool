@@ -17,7 +17,7 @@ const styles = {
     flexGrow: 1,
   },
   list: {
-    maxHeight: 400,
+    maxHeight: 500,
     overflow: 'auto',
   },
 };
