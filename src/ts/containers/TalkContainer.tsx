@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import Grid from 'material-ui/Grid';
 
-import { TalkAction, changeMessage, sendMessage } from '../actions/talk';
+import { TalkAction, changeMessage, sendMessage, postMessage } from '../actions/talk';
 import InputTextPanel from '../components/InputTextPanel';
 
 interface Props {
-  message?: string;
+  messageText?: string;
   onChangeMessage?: (message: string) => void;
   sendMessage?: (message: string) => void;
 }
@@ -18,7 +18,7 @@ class TalkContainer extends React.Component<Props> {
       <Grid container={true} direction="column">
         <Grid item={true} xs={12}>
           <InputTextPanel
-            message={this.props.message}
+            messageText={this.props.messageText}
             onChangeMessage={this.props.onChangeMessage}
             sendMessage={this.props.sendMessage}
           />
@@ -35,7 +35,11 @@ function mapStateToProps(state: any) {
 function mapDispatchToProps(dispatch: Dispatch<TalkAction>) {
   return {
     onChangeMessage: (message: string) => {dispatch(changeMessage(message));},
-    sendMessage: (message: string) => {dispatch(sendMessage(message));},
+    sendMessage: (messageText: string) => {
+      dispatch(sendMessage(messageText));
+      dispatch(postMessage(messageText));
+      dispatch(changeMessage(''));
+    },
   };
 }
 

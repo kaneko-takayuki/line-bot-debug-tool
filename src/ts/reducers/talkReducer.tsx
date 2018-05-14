@@ -1,27 +1,41 @@
-import { TalkAction, TalkActionTypes } from '../actions/talk';
+import * as _ from 'lodash';
+
+import {
+  ChangeMessageAction,
+  AddMessageLogAction,
+  TalkAction,
+  TalkActionTypes,
+} from '../actions/talk';
+import Message from '../dto/Message';
 
 export interface talkProps {
-  message: string;
+  messageText: string;
+  messageLog: Message[];
 }
 
 export const initTalkProps = {
-  message: '',
+  messageText: '',
+  messageLog: [],
 };
 
 export function talkReducer(state: talkProps = initTalkProps, action: TalkAction) {
   switch (action.type) {
     // メッセージを変更
-    case TalkActionTypes.CHANGE_MESSAGE:
+    case TalkActionTypes.CHANGE_MESSAGE: {
+      const _action = action as ChangeMessageAction;
       return {
         ...state,
-        message: action.payload.message,
+        messageText: _action.payload.messageText,
       };
-    // メッセージが送信された
-    case TalkActionTypes.SEND_MESSAGE:
+    }
+    // メッセージを受け取った
+    case TalkActionTypes.ADD_MESSAGE_LOG: {
+      const _action = action as AddMessageLogAction;
       return {
         ...state,
-        message: action.payload.message,
+        messageLog: _.concat(state.messageLog, _action.payload.message),
       };
+    }
     default:
       return state;
   }

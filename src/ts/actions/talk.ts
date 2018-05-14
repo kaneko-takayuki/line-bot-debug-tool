@@ -1,38 +1,76 @@
 import { Action } from 'redux';
 
+import Message from '../dto/Message';
+
 // アクション
 export const TalkActionTypes = {
   CHANGE_MESSAGE: Symbol(),
-  SEND_MESSAGE: Symbol(),
+  ADD_MESSAGE_LOG: Symbol(),
 };
 
 // メッセージ変更アクション
 export interface ChangeMessageAction extends Action {
   readonly type: typeof TalkActionTypes.CHANGE_MESSAGE;
   readonly payload: {
-    message: string,
+    messageText: string,
   };
 }
 
-// メッセージ送信アクション
-export interface SendMessageAction extends Action {
-  readonly type: typeof TalkActionTypes.SEND_MESSAGE;
+// メッセージログを追加するアクション
+export interface AddMessageLogAction extends Action {
+  readonly type: typeof TalkActionTypes.ADD_MESSAGE_LOG;
   readonly payload: {
-    message: string,
+    message: Message,
   };
 }
 
 // talkのアクションを全て統合したもの
-export type TalkAction = ChangeMessageAction | SendMessageAction;
+export type TalkAction = ChangeMessageAction | AddMessageLogAction;
 
 /**
  * メッセージを変更する
- * @param {string} message
+ * @param {string} messageText
  * @returns {ChangeMessageAction}
  */
-export function changeMessage(message: string): ChangeMessageAction {
+export function changeMessage(messageText: string): ChangeMessageAction {
   return {
     type: TalkActionTypes.CHANGE_MESSAGE,
+    payload: {
+      messageText,
+    },
+  };
+}
+
+/**
+ * メッセージをPOST送信する
+ * @param {string} messageText
+ * @returns {any}
+ */
+export function postMessage(messageText: string): any {
+  const method = 'POST';
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  };
+  const body = JSON.stringify({ messageText });
+
+  return (dispatch) => {
+    fetch('http://localhost:5000/send-message', { method, headers, body })
+      .then(response => response.json())
+      .then(result => new Message('bot', result.messageText))
+      .then(message => dispatch(addMessageLog(message)))
+      .catch(error => console.log(error));
+  };
+}
+
+/**
+ * メッセージを受け取ってログとして登録する
+ * @param {Message} message
+ * @returns {AddMessageLogAction}
+ */
+export function addMessageLog(message: Message): AddMessageLogAction {
+  return {
+    type: TalkActionTypes.ADD_MESSAGE_LOG,
     payload: {
       message,
     },
@@ -40,36 +78,13 @@ export function changeMessage(message: string): ChangeMessageAction {
 }
 
 /**
- * メッセージを送信する
- * @param {string} message
+ * 自分のメッセージを送信する(登録する)
+ * @param {string} messageText
  * @returns {any}
  */
-export function sendMessage(message: string): any {
-  const method = 'POST';
-  const headers = {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  };
-  const body = JSON.stringify({ message });
-
+export function sendMessage(messageText: string): any {
   return (dispatch) => {
-    fetch('http://localhost:5000/send-message', { method, headers, body })
-      .then(response => response.json())
-      .then(result => dispatch(successSendMessage(result.message)))
-      .catch(error => console.log(error));
-  };
-}
-
-/**
- * メッセージ送信に成功した
- * @param {string} message
- * @returns {SendMessageAction}
- */
-export function successSendMessage(message: string): SendMessageAction {
-  return {
-    type: TalkActionTypes.SEND_MESSAGE,
-    payload: {
-      message: '',
-    },
+    const message = new Message('me', messageText);
+    dispatch(addMessageLog(message));
   };
 }

@@ -4,7 +4,7 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 
 interface Props {
-  message: string;
+  messageText: string;
   onChangeMessage: (message: string) => void;
   sendMessage: (message: string) => void;
 }
@@ -37,7 +37,7 @@ export default class InputTextPanel extends React.Component<Props, null> {
             <Grid item={true} xs={12}>
               <TextField
                 style={styles.child}
-                value={this.props.message}
+                value={this.props.messageText}
                 placeholder="メッセージを入力してください"
                 multiline={true}
                 rows="3"
@@ -56,7 +56,7 @@ export default class InputTextPanel extends React.Component<Props, null> {
                 style={styles.button}
                 variant="raised"
                 color="primary"
-                onClick={() => this.props.sendMessage(this.props.message)}
+                onClick={() => this.props.sendMessage(this.props.messageText)}
               >
                 送信
               </Button>
